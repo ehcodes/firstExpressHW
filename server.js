@@ -20,13 +20,11 @@ app.get(`/bugs/:bugCount`, function (req, res) {
   let nextTotal;
   let randomAmount;
   if (req.params.bugCount > 0) {
-    randomAmount = Math.floor(Math.random()) * req.params.bugCount;
+    randomAmount = Math.floor(Math.random() * req.params.bugCount/5.5);
     if(randomAmount%2 == 0){
       nextTotal = req.params.bugCount - 1;
       res.send(
         `${docType}
-        <p>Next: ${nextTotal}</p>
-        <p>Random: ${randomAmount}</p>
         <p>${req.params.bugCount} little bugs in the code</p>
         <p>${req.params.bugCount} little bugs</p>
         <p>Take one down</p>
@@ -39,8 +37,6 @@ app.get(`/bugs/:bugCount`, function (req, res) {
       nextTotal = req.params.bugCount - 1 + randomAmount;
       res.send(
         `${docType}
-        <p>Next: ${nextTotal}</p>
-        <p>Random: ${randomAmount}</p>
         <p>${req.params.bugCount} little bugs in the code</p>
         <p>${req.params.bugCount} little bugs</p>
         <p>Take one down</p>
