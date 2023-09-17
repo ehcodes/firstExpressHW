@@ -12,6 +12,49 @@ app.get(`/`, function (req, res) {
   );
 });
 
+app.get(`/bugs`, function (req, res) {
+  res.send(`${docType}<p>bugs</p>`);
+});
+
+app.get(`/bugs/:bugCount`, function (req, res) {
+  let nextTotal;
+  let randomAmount;
+  if (req.params.bugCount > 0) {
+    randomAmount = Math.floor(Math.random()) * req.params.bugCount;
+    if(randomAmount%2 == 0){
+      nextTotal = req.params.bugCount - 1;
+      res.send(
+        `${docType}
+        <p>Next: ${nextTotal}</p>
+        <p>Random: ${randomAmount}</p>
+        <p>${req.params.bugCount} little bugs in the code</p>
+        <p>${req.params.bugCount} little bugs</p>
+        <p>Take one down</p>
+        <p>Patch it around</p>
+        <p>${nextTotal} bugs in the code</p>
+        <a href="/bugs/${nextTotal}" title="${passAround}">${passAround}</a>
+        <a href="/bugs" title="Start Over">Start Over</a>`
+      );      
+    }else{
+      nextTotal = req.params.bugCount - 1 + randomAmount;
+      res.send(
+        `${docType}
+        <p>Next: ${nextTotal}</p>
+        <p>Random: ${randomAmount}</p>
+        <p>${req.params.bugCount} little bugs in the code</p>
+        <p>${req.params.bugCount} little bugs</p>
+        <p>Take one down</p>
+        <p>Patch it around</p>
+        <p>${nextTotal} bugs in the code</p>
+        <a href="/bugs/${nextTotal}" title="${passAround}">${passAround}</a>
+        <a href="/bugs" title="Start Over">Start Over</a>`
+      );
+    }
+  } else if (req.params.bugCount == 0) {
+    res.send(`${docType}<p>Nirvana has been reached. All bugs have been patched, for now.</p>`);
+  }
+});
+
 app.get(`/:number_of_bottles`, function (req, res) {
   let nextTotal;
   if (req.params.number_of_bottles > 0) {
@@ -19,10 +62,8 @@ app.get(`/:number_of_bottles`, function (req, res) {
     res.send(
       `${docType}<p>${req.params.number_of_bottles} ${bottleMsg}</p><a href="/${nextTotal}" title="${passAround}">${passAround}</a><a href="/" title="Start Over">Start Over</a>`
     );
-  }else{
-    res.send(
-      `${docType}<p>No more bottles of beer on the wall.</p>`
-    );
+  } else {
+    res.send(`${docType}<p>No more bottles of beer on the wall.</p>`);
   }
 });
 
